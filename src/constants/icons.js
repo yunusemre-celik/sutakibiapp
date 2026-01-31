@@ -58,6 +58,15 @@ export const Icons = {
     EDIT_2: { name: 'edit-2', family: IconFamily.FEATHER },
     SETTINGS: { name: 'settings', family: IconFamily.FEATHER },
     LOG_OUT: { name: 'log-out', family: IconFamily.FEATHER },
+    ARROW_LEFT: { name: 'arrow-left', family: IconFamily.FEATHER },
+    ARROW_RIGHT: { name: 'arrow-right', family: IconFamily.FEATHER },
+
+    // Notifications & Settings
+    BELL: { name: 'bell', family: IconFamily.FEATHER },
+    VOLUME: { name: 'volume-2', family: IconFamily.FEATHER },
+    SHIELD: { name: 'shield', family: IconFamily.FEATHER },
+    FILE_TEXT: { name: 'file-text', family: IconFamily.FEATHER },
+    HELP_CIRCLE: { name: 'help-circle', family: IconFamily.FEATHER },
 
     // Additional useful icons
     CHECK: { name: 'check', family: IconFamily.FEATHER },

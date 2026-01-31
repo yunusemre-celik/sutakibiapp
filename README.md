@@ -17,12 +17,13 @@ Kullanıcıların günlük su tüketimini takip etmelerine, hedefler belirlemele
 - **Framework**: React Native (Expo)
 - **State Management**: Redux Toolkit
 - **Backend**: Supabase (Database + Authentication)
+- **Navigation**: React Navigation (Stack + Bottom Tabs)
 - **Push Notifications**: Expo Notifications
-- **Navigation**: React Navigation
 - **Icons**: @expo/vector-icons (Feather, FontAwesome, MaterialCommunityIcons)
 - **Animations**: react-native-reanimated (Smooth water glass animations)
 - **UI Effects**: @react-native-community/blur (Underwater background with blur)
 - **Design System**: Custom color palette with primary color #2267f2
+
 
 
 
@@ -192,6 +193,9 @@ Detaylı dokümantasyon için aşağıdaki dosyalara göz atın:
 - **[DASHBOARD_GUIDE.md](./DASHBOARD_GUIDE.md)**: Dashboard component'leri ve animasyonlar
 - **[DASHBOARD_SETUP_SUMMARY.md](./DASHBOARD_SETUP_SUMMARY.md)**: Dashboard kurulum özeti
 - **[REDUX_SUPABASE_INTEGRATION.md](./REDUX_SUPABASE_INTEGRATION.md)**: Redux ve Supabase entegrasyon kılavuzu
+
+### Navigation ve Ekranlar
+- **[NAVIGATION_GUIDE.md](./NAVIGATION_GUIDE.md)**: Navigation yapısı ve tüm ekranlar
 
 ### Proje Yapısı
 - **[PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md)**: Proje yapısı ve mimari

@@ -1,26 +1,19 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Provider } from 'react-redux';
-import { StatusBar } from 'expo-status-bar';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { store } from './src/redux/store';
-import { registerForPushNotifications } from './src/services/notificationService';
+import { StatusBar } from 'react-native';
+import store from './src/redux/store';
+import AppNavigator from './src/navigation/AppNavigator';
 
-// TODO: Import navigation after creating navigation structure
-// import AppNavigator from './src/navigation/AppNavigator';
-
+/**
+ * Main App Component
+ * 
+ * Redux Provider ve Navigation Container
+ */
 export default function App() {
-  useEffect(() => {
-    // Register for push notifications on app start
-    registerForPushNotifications();
-  }, []);
-
   return (
     <Provider store={store}>
-      <SafeAreaProvider>
-        <StatusBar style="auto" />
-        {/* TODO: Replace with AppNavigator */}
-        {/* <AppNavigator /> */}
-      </SafeAreaProvider>
+      <StatusBar barStyle="dark-content" />
+      <AppNavigator />
     </Provider>
   );
 }
