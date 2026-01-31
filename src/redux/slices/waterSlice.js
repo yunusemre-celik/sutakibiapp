@@ -93,6 +93,70 @@ export const fetchWaterHistory = createAsyncThunk(
     }
 );
 
+// NEW: Fetch daily summaries for history
+export const fetchDailySummaries = createAsyncThunk(
+    'water/fetchDailySummaries',
+    async (days = 7, { getState, rejectWithValue }) => {
+        try {
+            const { auth, user } = getState();
+            const userId = auth.user?.id;
+            const waterGoal = user.profile?.water_goal || 2.5;
+
+            if (!userId) {
+                throw new Error('User not authenticated');
+            }
+
+            const endDate = new Date();
+            endDate.setHours(23, 59, 59, 999);
+            const startDate = new Date();
+            startDate.setDate(startDate.getDate() - days);
+            startDate.setHours(0, 0, 0, 0);
+
+            const { data, error } = await supabase
+                .from('water_logs')
+                .select('*')
+                .eq('user_id', userId)
+                .gte('logged_at', startDate.toISOString())
+                .lte('logged_at', endDate.toISOString())
+                .order('logged_at', { ascending: false });
+
+            if (error) throw error;
+
+            // Group by date and calculate daily totals
+            const dailySummaries = {};
+            data.forEach(log => {
+                const date = new Date(log.logged_at);
+                const dateKey = date.toISOString().split('T')[0];
+
+                if (!dailySummaries[dateKey]) {
+                    dailySummaries[dateKey] = {
+                        date: dateKey,
+                        total: 0,
+                        logs: [],
+                    };
+                }
+
+                dailySummaries[dateKey].total += log.volume;
+                dailySummaries[dateKey].logs.push(log);
+            });
+
+            // Convert to array and add percentage
+            const summariesArray = Object.values(dailySummaries).map(summary => ({
+                ...summary,
+                percentage: (summary.total / waterGoal) * 100,
+                goal: waterGoal,
+            }));
+
+            // Sort by date descending
+            summariesArray.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            return summariesArray;
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+    }
+);
+
 export const deleteWaterLog = createAsyncThunk(
     'water/deleteLog',
     async (logId, { rejectWithValue }) => {
@@ -116,6 +180,7 @@ const waterSlice = createSlice({
         todayLogs: [],
         todayTotal: 0,
         history: [],
+        dailySummaries: [],
         loading: false,
         error: null,
     },
@@ -168,6 +233,19 @@ const waterSlice = createSlice({
                 state.history = action.payload;
             })
             .addCase(fetchWaterHistory.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
+            // Fetch Daily Summaries
+            .addCase(fetchDailySummaries.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(fetchDailySummaries.fulfilled, (state, action) => {
+                state.loading = false;
+                state.dailySummaries = action.payload;
+            })
+            .addCase(fetchDailySummaries.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
             })

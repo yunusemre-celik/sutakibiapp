@@ -19,6 +19,13 @@ Kullanıcıların günlük su tüketimini takip etmelerine, hedefler belirlemele
 - **Backend**: Supabase (Database + Authentication)
 - **Push Notifications**: Expo Notifications
 - **Navigation**: React Navigation
+- **Icons**: @expo/vector-icons (Feather, FontAwesome, MaterialCommunityIcons)
+- **Animations**: react-native-reanimated (Smooth water glass animations)
+- **UI Effects**: @react-native-community/blur (Underwater background with blur)
+- **Design System**: Custom color palette with primary color #2267f2
+
+
+
 
 ## 📋 Gereksinimler
 
@@ -165,6 +172,32 @@ Supabase Authentication ile:
 - Email/Password ile giriş
 - Oturum yönetimi
 - Row Level Security (RLS) ile veri güvenliği
+
+## 📚 Dokümantasyon
+
+Detaylı dokümantasyon için aşağıdaki dosyalara göz atın:
+
+### Ekran Akışı ve Değişkenler
+- **[APP_FLOW_AND_VARIABLES.md](./APP_FLOW_AND_VARIABLES.md)**: Ekran akışı ve tüm değişkenler
+- **[SCREEN_FLOW_DIAGRAM.md](./SCREEN_FLOW_DIAGRAM.md)**: Görsel ekran akış diyagramları
+- **[VARIABLES_REFERENCE.md](./VARIABLES_REFERENCE.md)**: Değişkenler hızlı referans kılavuzu
+- **[IMPLEMENTATION_SUMMARY.md](./IMPLEMENTATION_SUMMARY.md)**: Uygulama özeti ve kontrol listesi
+
+### İkonlar ve Tasarım
+- **[ICONS_GUIDE.md](./ICONS_GUIDE.md)**: Detaylı ikon kılavuzu ve kullanım örnekleri
+- **[ICONS_SETUP_SUMMARY.md](./ICONS_SETUP_SUMMARY.md)**: İkon kurulum özeti ve hızlı başlangıç
+- **[BACKGROUND_GUIDE.md](./BACKGROUND_GUIDE.md)**: Underwater background ve blur efekti kullanımı
+
+### Dashboard ve Component'ler
+- **[DASHBOARD_GUIDE.md](./DASHBOARD_GUIDE.md)**: Dashboard component'leri ve animasyonlar
+- **[DASHBOARD_SETUP_SUMMARY.md](./DASHBOARD_SETUP_SUMMARY.md)**: Dashboard kurulum özeti
+- **[REDUX_SUPABASE_INTEGRATION.md](./REDUX_SUPABASE_INTEGRATION.md)**: Redux ve Supabase entegrasyon kılavuzu
+
+### Proje Yapısı
+- **[PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md)**: Proje yapısı ve mimari
+- **[DATABASE_SCHEMA.md](./DATABASE_SCHEMA.md)**: Veritabanı şeması
+- **[SETUP_GUIDE.md](./SETUP_GUIDE.md)**: Kurulum kılavuzu
+
 
 ## 📝 Lisans
 
