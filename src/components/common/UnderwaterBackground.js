@@ -28,7 +28,7 @@ const UnderwaterBackground = ({
 }) => {
     return (
         <ImageBackground
-            source={require('../../assets/underwater-bg.png')}
+            source={require('../../../assets/underwater-bg.png')}
             style={[styles.background, style]}
             resizeMode="cover"
         >

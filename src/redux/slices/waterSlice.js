@@ -1,5 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { supabase } from '../../services/supabase';
+import { supabase, isSupabaseConfigured } from '../../services/supabase';
+
+// Mock water logs for development
+const MOCK_LOGS = [
+    { id: '1', volume: 0.5, logged_at: new Date().toISOString(), container_id: 'mock' },
+    { id: '2', volume: 0.25, logged_at: new Date(Date.now() - 3600000).toISOString(), container_id: 'mock' },
+];
 
 // Async thunks for water logging
 export const logWaterIntake = createAsyncThunk(
@@ -14,6 +20,18 @@ export const logWaterIntake = createAsyncThunk(
             }
 
             const actualVolume = customVolume || volume;
+
+            // If Supabase is not configured, use mock data
+            if (!isSupabaseConfigured) {
+                console.warn('Using mock log water intake');
+                return {
+                    id: Date.now().toString(),
+                    user_id: userId,
+                    container_id: containerId,
+                    volume: actualVolume,
+                    logged_at: new Date().toISOString(),
+                };
+            }
 
             const { data, error } = await supabase
                 .from('water_logs')
@@ -43,6 +61,12 @@ export const fetchTodayWaterLogs = createAsyncThunk(
 
             if (!userId) {
                 throw new Error('User not authenticated');
+            }
+
+            // If Supabase is not configured, use mock data
+            if (!isSupabaseConfigured) {
+                console.warn('Using mock fetch today logs');
+                return MOCK_LOGS;
             }
 
             const today = new Date();
@@ -104,6 +128,17 @@ export const fetchDailySummaries = createAsyncThunk(
 
             if (!userId) {
                 throw new Error('User not authenticated');
+            }
+
+            // If Supabase is not configured, use mock data
+            if (!isSupabaseConfigured) {
+                console.warn('Using mock daily summaries');
+                const today = new Date().toISOString().split('T')[0];
+                const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+                return [
+                    { date: today, total: 0.75, percentage: 30, goal: waterGoal, logs: MOCK_LOGS },
+                    { date: yesterday, total: 2.4, percentage: 96, goal: waterGoal, logs: [] },
+                ];
             }
 
             const endDate = new Date();

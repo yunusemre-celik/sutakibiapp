@@ -1,11 +1,27 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { supabase } from '../../services/supabase';
+import { supabase, isSupabaseConfigured } from '../../services/supabase';
+
+// Mock user for development without Supabase
+const MOCK_USER = {
+    id: 'mock-user-id',
+    email: 'demo@sutakibi.com',
+    user_metadata: { name: 'Demo User' },
+};
 
 // Async thunks for authentication
 export const signUp = createAsyncThunk(
     'auth/signUp',
     async ({ email, password }, { rejectWithValue }) => {
         try {
+            // If Supabase is not configured, use mock data
+            if (!isSupabaseConfigured) {
+                console.warn('Using mock sign up');
+                return {
+                    user: MOCK_USER,
+                    session: { user: MOCK_USER, access_token: 'mock-token' },
+                };
+            }
+
             const { data, error } = await supabase.auth.signUp({
                 email,
                 password,
@@ -22,6 +38,15 @@ export const signIn = createAsyncThunk(
     'auth/signIn',
     async ({ email, password }, { rejectWithValue }) => {
         try {
+            // If Supabase is not configured, use mock data
+            if (!isSupabaseConfigured) {
+                console.warn('Using mock sign in');
+                return {
+                    user: MOCK_USER,
+                    session: { user: MOCK_USER, access_token: 'mock-token' },
+                };
+            }
+
             const { data, error } = await supabase.auth.signInWithPassword({
                 email,
                 password,
@@ -38,6 +63,12 @@ export const signOut = createAsyncThunk(
     'auth/signOut',
     async (_, { rejectWithValue }) => {
         try {
+            // If Supabase is not configured, just clear state
+            if (!isSupabaseConfigured) {
+                console.warn('Using mock sign out');
+                return null;
+            }
+
             const { error } = await supabase.auth.signOut();
             if (error) throw error;
             return null;
@@ -51,6 +82,12 @@ export const checkSession = createAsyncThunk(
     'auth/checkSession',
     async (_, { rejectWithValue }) => {
         try {
+            // If Supabase is not configured, return null (no session)
+            if (!isSupabaseConfigured) {
+                console.warn('Supabase not configured - no session check');
+                return null;
+            }
+
             const { data: { session }, error } = await supabase.auth.getSession();
             if (error) throw error;
             return session;

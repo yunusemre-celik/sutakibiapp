@@ -17,6 +17,7 @@
     "@react-navigation/stack": "^7.6.16",
     "@reduxjs/toolkit": "^2.11.2",
     "@supabase/supabase-js": "^2.93.3",
+    "babel-plugin-inline-dotenv": "^1.7.0",
     "expo": "~54.0.32",
     "expo-notifications": "^0.32.16",
     "expo-status-bar": "~3.0.9",
